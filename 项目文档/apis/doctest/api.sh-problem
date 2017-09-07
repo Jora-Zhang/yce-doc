@@ -1,0 +1,62 @@
+#! /bin/bash
+
+checkError() {
+    echo $0, $1, $2
+    echo $1 | wc -c
+    if [ $2 != 0 ]
+    then
+        echo $1
+        echo -e "......\t\tError"
+        exit -1
+    else
+        echo -e "......\t\tOK"
+        echo $1
+    fi
+}
+
+ORGID="1"
+USERID="7"
+SESSIONID="7d3b67eb-acb4-4929-816d-5318f04e6fed"
+
+grep "iris.API" ../../../src/app/backend/common/yce/router/router.go | cut -d '"' -f2 > apis
+echo `wc -l apis` need to test
+echo ORGID=$ORGID
+echo USERID=$USERID
+echo SESSIONID=$SESSIONID
+
+# testing login
+echo -e "----------------------------------\n Testing /api/v1/users/login"
+return=`curl -sXPOST -d "{\"username\":\"liyao.miao\", \"password\":\"123456\"}" localhost:8080/api/v1/users/login`
+checkError $return `echo $return | grep "code" | cut -d ':' -f2 | cut -d ',' -f1`
+SESSIONID=`echo $return | grep "sessionId" | cut -d ':' -f5 | cut -d ',' -f1 | cut -d '"' -f2 | cut -d '\' -f1`
+echo SESSIONID=$SESSIONID
+
+testApi() {
+    echo -e "----------------------------------\n
+    Testing $1"
+    URL="localhost:8080$1"
+    URL=`echo $URL | sed "s#:orgId#$ORGID#g"`
+    URL=`echo $URL | sed "s#:userId#$USERID#g"`
+    echo $0 $1 $2
+    if [ $2 == "GET" ]
+    then
+        echo $URL
+        result=`curl -sX$2 -H "Authorization":$SESSIONID $URL`
+        echo $result
+        echo $result | wc -c
+        status=`echo $result | grep "code" | cut -d ':' -f2 | cut -d ',' -f1`
+        echo $status
+        # checkError $result `echo $result | grep "code" | cut -d ':' -f2 | cut -d ',' -f1`
+        checkError $result $status
+    fi
+    if [ $2 == "POST" ]
+    then
+        echo $URL
+        return=`curl -sX$2 -H "Authorization":$SESSIONID -d $3 $URL`
+        checkError $return `echo $return | grep "code" | cut -d ':' -f2 | cut -d ',' -f1`
+    fi
+}
+
+
+testApi `grep -w 3 apisnum | cut -d ' ' -f2` GET
+

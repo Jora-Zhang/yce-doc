@@ -1,0 +1,90 @@
+GET  /
+
+### Datacenters
+GET  /api/v1/datacenter
+POST /api/v1/datacenter/check
+POST /api/v1/datacenter/delete
+POST /api/v1/datacenter/new
+POST /api/v1/datacenter/update
+
+### Nodeport
+GET  /api/v1/nodeports
+POST /api/v1/nodeports/check
+
+### Organization
+GET  /api/v1/organization
+POST /api/v1/organization/check
+POST /api/v1/organization/delete
+GET  /api/v1/organization/init
+POST /api/v1/organization/new
+POST /api/v1/organization/update
+
+### Deployment
+GET  /api/v1/organizations/:orgId/users/:userId/deployments
+GET  /api/v1/organizations/:orgId/users/:userId/deployments/init
+POST /api/v1/organizations/:orgId/users/:userId/deployments/check
+POST /api/v1/organizations/:orgId/users/:userId/deployments/new
+GET  /api/v1/organizations/:orgId/deploymentstat
+GET  /api/v1/organizations/:orgId/datacenters/:dcId/deployments/:name/history
+POST /api/v1/organizations/:orgId/deployments/:deploymentName/delete
+POST /api/v1/organizations/:orgId/deployments/:deploymentName/respawn
+POST /api/v1/organizations/:orgId/deployments/:deploymentName/rollback
+POST /api/v1/organizations/:orgId/deployments/:deploymentName/rolling
+POST /api/v1/organizations/:orgId/deployments/:deploymentName/scale
+POST /api/v1/organizations/:orgId/pods/:podName/logs
+
+### Operation History
+GET  /api/v1/organizations/:orgId/operationlog
+
+### Dashboard
+GET  /api/v1/organizations/:orgId/operationstat
+GET  /api/v1/organizations/:orgId/resourcestat
+
+### Service & Endpoint
+GET /api/v1/organizations/:orgId/users/:userId/extensions
+GET  /api/v1/organizations/:orgId/users/:userId/endpoints
+GET  /api/v1/organizations/:orgId/users/:userId/endpoints/init
+POST /api/v1/organizations/:orgId/users/:userId/endpoints/check
+POST /api/v1/organizations/:orgId/users/:userId/endpoints/new
+POST /api/v1/organizations/:orgId/endpoints/:epName
+POST /api/v1/organizations/:orgId/services/:svcName
+GET  /api/v1/organizations/:orgId/users/:userId/services
+POST /api/v1/organizations/:orgId/users/:userId/services/check
+GET  /api/v1/organizations/:orgId/users/:userId/services/init
+POST /api/v1/organizations/:orgId/users/:userId/services/new
+POST /api/v1/organizations/:orgId/users/:userId/services/update
+
+### User
+GET  /api/v1/user
+POST /api/v1/user/check
+POST /api/v1/user/delete
+GET  /api/v1/user/init
+POST /api/v1/user/new
+POST /api/v1/user/update
+/api/v1/users/login
+/api/v1/users/logout
+# /api/v1/organizations/:orgId/users/:userId/checkpassword
+POST /api/v1/organizations/:orgId/users/:userId/selfupdate
+
+### NavList
+GET /api/v1/organizations/:orgId/users/:userId/navList
+
+### Template
+GET  /api/v1/organizations/:orgId/users/:userId/templates
+POST /api/v1/organizations/:orgId/users/:userId/templates/check
+POST /api/v1/organizations/:orgId/users/:userId/templates/delete
+POST /api/v1/organizations/:orgId/users/:userId/templates/new
+POST /api/v1/organizations/:orgId/users/:userId/templates/update
+
+### Topology
+GET  /api/v1/organizations/:orgId/users/:userId/topology
+
+### Registry
+/api/v1/registry/images
+
+
+### Healthz
+/healthz
+
+### Version
+/version
